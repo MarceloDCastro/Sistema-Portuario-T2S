@@ -1,16 +1,28 @@
 package com.t2s.sistemaportuariot2s.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "tb_container")
 public class Container extends AbstractEntity{
 
 	private static final long serialVersionUID = 1L;
 	
+	@Column(name = "nm_cliente", nullable = false, length = 80)
 	private String nomeCliente;
+	
+	@Column(name = "cd_container", nullable = false, length = 11)
 	private String numero;
+	
+	@Column(name = "ds_tipo", nullable = false)
 	private Integer tipo;
+	
+	@Column(name = "ds_status", nullable = false)
 	private String status;
+	
+	@Column(name = "ds_Categoria", nullable = false)
 	private String categoria;
 	
 	public Container() {

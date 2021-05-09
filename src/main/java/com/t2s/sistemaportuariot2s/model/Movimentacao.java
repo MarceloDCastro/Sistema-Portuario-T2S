@@ -2,15 +2,23 @@ package com.t2s.sistemaportuariot2s.model;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "tb_movimentacao")
 public class Movimentacao extends AbstractEntity{
 	
 	private static final long serialVersionUID = 1L;
 		
+	@Column(name = "ds_tipo", nullable = false)
 	private String tipo;
+	
+	@Column(name = "dt_inicio", nullable = false)
 	private Date dataHoraInicio;
+	
+	@Column(name = "dt_fim", nullable = true)
 	private Date dataHoraFim;
 	
 	public Movimentacao() {
