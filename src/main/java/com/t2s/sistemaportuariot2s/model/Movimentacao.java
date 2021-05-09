@@ -2,6 +2,9 @@ package com.t2s.sistemaportuariot2s.model;
 
 import java.util.Date;
 
+import javax.persistence.Entity;
+
+@Entity
 public class Movimentacao extends AbstractEntity{
 	
 	private static final long serialVersionUID = 1L;

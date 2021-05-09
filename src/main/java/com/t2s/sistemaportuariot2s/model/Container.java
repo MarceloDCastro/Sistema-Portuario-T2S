@@ -1,5 +1,8 @@
 package com.t2s.sistemaportuariot2s.model;
 
+import javax.persistence.Entity;
+
+@Entity
 public class Container extends AbstractEntity{
 
 	private static final long serialVersionUID = 1L;
