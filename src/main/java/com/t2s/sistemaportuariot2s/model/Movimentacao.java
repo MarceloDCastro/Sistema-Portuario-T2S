@@ -6,6 +6,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 @Entity
 @Table(name = "tb_movimentacao")
 public class Movimentacao extends AbstractEntity{
@@ -16,9 +18,11 @@ public class Movimentacao extends AbstractEntity{
 	private String tipo;
 	
 	@Column(name = "dt_inicio", nullable = false)
+	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
 	private Date dataHoraInicio;
 	
 	@Column(name = "dt_fim", nullable = true)
+	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
 	private Date dataHoraFim;
 	
 	public Movimentacao() {

@@ -3,63 +3,72 @@ package com.t2s.sistemaportuariot2s.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.t2s.sistemaportuariot2s.model.Container;
 import com.t2s.sistemaportuariot2s.service.ContainerService;
 
-@RestController
+@Controller
 @RequestMapping("/containers")
-public class ContainerController implements ControllerInterface<Container>{
-	
+public class ContainerController {
+
 	@Autowired
 	private ContainerService service;
-	
-	@Override
-	@GetMapping
-	public ResponseEntity<List<Container>> getAll (){
-		return ResponseEntity.ok(service.findAll());
+
+	// GET
+
+	@RequestMapping(method = RequestMethod.GET)
+	public ModelAndView getContainers() {
+		ModelAndView modelview = new ModelAndView("containers");
+		List<Container> containers = service.findAll();
+		modelview.addObject("containers", containers);
+		return modelview;
 	}
-	
-	@Override
-	@GetMapping(value = "/{id}")
-	public ResponseEntity<?> get (@PathVariable("id") Long id){
-		Container _container = service.findById(id);
-		if (_container != null) 
-			return ResponseEntity.ok(_container);
-		return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+
+	// POST
+
+	@RequestMapping(value = "/add", method = RequestMethod.GET)
+	public String getFormContainer(Model model) {
+		model.addAttribute("container", new Container());
+		return "addcontainer";
 	}
-	
-	@Override
-	@PostMapping
-	public ResponseEntity<Container> post (@RequestBody Container container){
+
+	@PostMapping(value = "/add")
+	public String addContainer(Container container, Model model) {
+		model.addAttribute("container", container);
 		service.create(container);
-		return ResponseEntity.ok(container);
+		return "containeradicionado";
 	}
-	
-	@Override
-	@PutMapping
-	public ResponseEntity<?> put (@RequestBody Container container){
-		if (service.update(container))
-			return ResponseEntity.ok(container);
-		return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+
+	// PUT
+
+	@RequestMapping(value = "/att/{id}", method = RequestMethod.GET)
+	public ModelAndView attContainer(@PathVariable Long id) {
+		ModelAndView modelview = new ModelAndView("attcontainer");
+		Container cantigo = service.findById(id);
+		modelview.addObject("cantigo", cantigo);
+		return modelview;
 	}
-	
-	@Override
-	@DeleteMapping(value = "/{id}")
-	public ResponseEntity<?> delete (@PathVariable("id") Long id){
-		if (service.delete(id))
-			return ResponseEntity.ok().build();
-		return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+
+	@PostMapping(value = "/att/{id}")
+	public String attContainer(Container container, Model model) {
+		model.addAttribute("container", container);
+		service.update(container);
+		return "containeratualizado";
 	}
-	
+
+	// DELETE
+
+	@RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
+	public String deleteContainer(@PathVariable Long id) {
+		service.delete(id);
+		return "redirect:/containers";
+	}
+
 }

@@ -3,63 +3,72 @@ package com.t2s.sistemaportuariot2s.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.t2s.sistemaportuariot2s.model.Movimentacao;
 import com.t2s.sistemaportuariot2s.service.MovimentacaoService;
 
-@RestController
+@Controller
 @RequestMapping("/movimentacoes")
-public class MovimentacaoController implements ControllerInterface<Movimentacao>{
-	
+public class MovimentacaoController {
+
 	@Autowired
 	private MovimentacaoService service;
 
-	@Override
-	@GetMapping
-	public ResponseEntity<List<Movimentacao>> getAll() {
-		return ResponseEntity.ok(service.findAll());
+	// GET
+
+	@RequestMapping(method = RequestMethod.GET)
+	public ModelAndView getMovimentacoes() {
+		ModelAndView modelview = new ModelAndView("movimentacoes");
+		List<Movimentacao> movimentacoes = service.findAll();
+		modelview.addObject("movimentacoes", movimentacoes);
+		return modelview;
 	}
 
-	@Override
-	@GetMapping(value = "/{id}")
-	public ResponseEntity<?> get(@PathVariable("id") Long id) {
-		Movimentacao _movimentacao = service.findById(id);
-		if (_movimentacao != null) 
-			return ResponseEntity.ok(_movimentacao);
-		return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+	// POST
+
+	@RequestMapping(value = "/add", method = RequestMethod.GET)
+	public String getFormMovimentacao(Model model) {
+		model.addAttribute("movimentacao", new Movimentacao());
+		return "addmovimentacao";
 	}
 
-	@Override
-	@PostMapping
-	public ResponseEntity<Movimentacao> post(@RequestBody Movimentacao movimentacao) {
+	@PostMapping(value = "/add")
+	public String addMovimentacao(Movimentacao movimentacao, Model model) {
+		model.addAttribute("movimentacao", movimentacao);
 		service.create(movimentacao);
-		return ResponseEntity.ok(movimentacao);
+		return "movimentacaoadicionado";
 	}
 
-	@Override
-	@PutMapping
-	public ResponseEntity<?> put(@RequestBody Movimentacao movimentacao) {
-		if (service.update(movimentacao))
-			return ResponseEntity.ok(movimentacao);
-		return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+	// PUT
+
+	@RequestMapping(value = "/att/{id}", method = RequestMethod.GET)
+	public ModelAndView attMovimentacao(@PathVariable Long id) {
+		ModelAndView modelview = new ModelAndView("attmovimentacao");
+		Movimentacao mantigo = service.findById(id);
+		modelview.addObject("mantigo", mantigo);
+		return modelview;
 	}
 
-	@Override
-	@DeleteMapping(value = "/{id}")
-	public ResponseEntity<?> delete(@PathVariable("id") Long id) {
-		if (service.delete(id))
-			return ResponseEntity.ok().build();
-		return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+	@PostMapping(value = "/att/{id}")
+	public String attMovimentacao(Movimentacao movimentacao, Model model) {
+		model.addAttribute("movimentacao", movimentacao);
+		service.update(movimentacao);
+		return "movimentacaoatualizado";
 	}
-	
+
+	// DELETE
+
+	@RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
+	public String deleteMovimentacao(@PathVariable Long id) {
+		service.delete(id);
+		return "redirect:/movimentacoes";
+	}
+
 }

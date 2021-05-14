@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>T2S | Adicionar Movimentação</title>
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0"
+	crossorigin="anonymous">
+<style>
+body {
+	background-color: #1a1d24;
+	color: #FFF;
+}
+
+#t2s {
+	color: #01b3e8;
+	font-size: 36px;
+	font-weight: bold;
+}
+
+img {
+	padding: 0;
+	margin: 0;
+}
+
+.nav-link {
+	color: #01b3e8 !important;
+	font-weight: bold;
+}
+
+.nav-link:hover {
+	background-color: #FFF;
+	color: #3164fe !important;
+}
+
+h2 {
+	text-align: center;
+	margin-top: 10px;
+}
+
+table {
+	margin: auto;
+	color: #FFF !important;
+}
+
+#container {
+	width: 40%;
+	margin: 50px auto !important;
+	padding: 1% 5%;
+}
+
+#buttons {
+	width: 90%;
+	margin: auto;
+	text-align: center;
+}
+</style>
+</head>
+<body>
+	<header>
+		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+			<div class="container-fluid">
+				<a id="t2s" class="navbar-brand" href="/"><img
+					src="https://i.imgur.com/PUXKYNv.png" alt="T2S" width="50"
+					height="50" class="d-inline-block align-text-top">T2S</a>
+				<button class="navbar-toggler" type="button"
+					data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+					aria-controls="navbarSupportedContent" aria-expanded="false"
+					aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse mx-5"
+					id="navbarSupportedContent">
+					<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+						<li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+						<li class="nav-item"><a class="nav-link" href="/sobre">Sobre</a></li>
+						<li class="nav-item"><a class="nav-link" href="/containers">Containers</a></li>
+						<li class="nav-item"><a class="nav-link"
+							href="/movimentacoes">Movimentações</a></li>
+					</ul>
+					<ul class="navbar-nav mb-2 mb-lg-0">
+						<li class="nav-item"><a class="nav-link" href="#">Logar</a></li>
+						<li class="nav-item"><a class="nav-link" href="#">Cadastrar</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+	</header>
+
+	<div id="container"
+		class="container-fluid border border-info rounded-3">
+		<h2>Adicionar Movimentação</h2>
+		<form method="post" th:action="@{/movimentacoes/add}"
+			th:object="${movimentacao}">
+			<!-- TIPO -->
+			<div class="mb-3">
+				<label for="tipo" class="form-label">Tipo: </label> <select
+					id="tipo" class="form-select" th:field="*{tipo}">
+					<option value="Embarque" selected>Embarque</option>
+					<option value="Descarga">Descarga</option>
+					<option value="Gate In">Gate In</option>
+					<option value="Gate Out">Gate Out</option>
+					<option value="Posicionamento Pilha">Posicionamento Pilha</option>
+					<option value="Pesagem">Pesagem</option>
+					<option value="Scanner">Scanner</option>
+				</select>
+			</div>
+			<!-- DATA/HORA INICIO -->
+			<div class="mb-3">
+				<label for="dataHoraInicio" class="form-label">Data/Hora de
+					Início:</label> <input type="datetime-local" class="form-control"
+					id="dataHoraInicio" required
+					th:field="*{dataHoraInicio}">
+			</div>
+			<!-- DATA/HORA FIM -->
+			<div class="mb-3">
+				<label for="dataHoraFim" class="form-label">Data/Hora de
+					Término:</label> <input type="datetime-local" class="form-control"
+					id="dataHoraFim"required
+					th:field="*{dataHoraFim}">
+			</div>
+			<div id="buttons">
+				<button type="submit" class="btn btn-outline-primary"
+					value="getFormMovimentacao">Adicionar</button>
+			</div>
+		</form>
+	</div>
+	<!-- Scripts -->
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8"
+		crossorigin="anonymous"></script>
+</body>
+</html>
