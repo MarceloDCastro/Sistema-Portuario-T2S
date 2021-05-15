@@ -10,7 +10,7 @@
 	crossorigin="anonymous">
 
 <style>
-body{
+body {
 	background-color: #1a1d24;
 	color: #FFF;
 }
@@ -31,7 +31,7 @@ img {
 	font-weight: bold;
 }
 
-.nav-link:hover{
+.nav-link:hover {
 	background-color: #FFF;
 	color: #3164fe !important;
 }
@@ -41,19 +41,14 @@ h2 {
 	margin-top: 10px;
 }
 
-table {
-	margin: auto;
-	width: 95%;
-	color: #FFF !important;
-}
-
 #container {
-	width: 40%;
+	width: 50%;
 	margin: 50px auto !important;
 	padding: 1%;
 }
-#container p{
-	width: 50%;
+
+hr {
+	color: #01b3e8;
 }
 </style>
 </head>
@@ -70,13 +65,14 @@ table {
 					aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon"></span>
 				</button>
-				<div class="collapse navbar-collapse mx-5" id="navbarSupportedContent">
+				<div class="collapse navbar-collapse mx-5"
+					id="navbarSupportedContent">
 					<ul class="navbar-nav me-auto mb-2 mb-lg-0">
 						<li class="nav-item"><a class="nav-link" href="/">Home</a></li>
 						<li class="nav-item"><a class="nav-link" href="/sobre">Sobre</a></li>
 						<li class="nav-item"><a class="nav-link" href="/containers">Containers</a></li>
-						<li class="nav-item"><a class="nav-link" href="/movimentacoes">Movimentações</a>
-						</li>
+						<li class="nav-item"><a class="nav-link"
+							href="/movimentacoes">Movimentações</a></li>
 					</ul>
 					<ul class="navbar-nav mb-2 mb-lg-0">
 						<li class="nav-item"><a class="nav-link" href="#">Logar</a></li>
@@ -87,14 +83,22 @@ table {
 			</div>
 		</nav>
 	</header>
-	
-	<div id="container">
-	<h1>T2S</h1>
-	<p>Solução de <strong>software</strong>
-	 com agilidade, excelência e exclusividade para o <strong>Setor Portuário</strong>.</p>
-	 <a href="/containers"><button class="btn btn-outline-info">Bem-vindo(a) ></button></a>
+
+	<div id="container" class="border border-info rounded-3">
+		<h2>Sobre</h2>
+		<hr>
+		<h3>Histórico de Releases</h3>
+		<p>Site criado com o objetivo de ser uma aplicação web com os
+			seguintes requisitos:</p>
+		<ul>
+			<li>Página Inicial</li>
+			<li>Página Sobre com versão e histórico de releases</li>
+			<li>CRUD de containers</li>
+			<li>CRUD de movimentações</li>
+			<li>Cadastro e Login</li>
+		</ul>
+		<p class="text-end">Versão 1.0</p>
 	</div>
-	
 	<!-- Scripts -->
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"
